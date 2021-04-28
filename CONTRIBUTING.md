@@ -9,7 +9,6 @@
 ![GitHub issues by-label "good first issue"](https://img.shields.io/github/issues/bkimminich/juice-shop/good%20first%20issue.svg)
 
 ## Code Contributions
-
 The minimum requirements for code contributions are:
 
 1. The code _must_ be compliant with the
