@@ -17,7 +17,7 @@ jobs:
           git checkout master
 
       - name: Install TruffleHog
-        uses: trufflesecurity/trufflehog@add-actions-cli-switch 
+        uses: trufflesecurity/trufflehog@v3.78.0
         with:
           tools: trufflehog
 
