@@ -1,31 +1,29 @@
-name: Secret Scan on Push to Master
+name: Secret Detection
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
 
 jobs:
-  secret-scan:
+  detect_secrets:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
+      - name: Download new branch (optional)
+        run: |
+          git fetch origin master
+          # This assumes your local branch is also named master
+          git checkout master
 
-    - name: Install truffleHog
-      run: |
-        python -m pip install --upgrade pip
-        pip install truffleHog
+      - name: Install TruffleHog
+        uses: grahamwl/gh-action-install-tools@v1
+        with:
+          tools: trufflehog
 
-    - name: Run truffleHog scan
-      run: trufflehog filesystem --path .
+      - name: Scan for Secrets
+        run: trufflehog filesystem .
 
-    - name: Report findings
-      if: failure()
-      run: echo "Secrets found! Please review the output above."
+      - name: Fail Workflow if Secrets Found (Optional)
+        run: exit 1
+        if: ${{ contains(steps.detect_secrets.outputs, 'secrets_found') }}
