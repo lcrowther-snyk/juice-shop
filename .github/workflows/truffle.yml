@@ -19,8 +19,11 @@ jobs:
       - name: Install TruffleHog
         uses: trufflesecurity/trufflehog@v3.78.0
         with:
-          path: ./juice-shop
+          path: /home/runner/work/juice-shop/juice-shop
           tools: trufflehog
+
+      - name: run-stuff
+        run: ls /home/runner/work/juice-shop/juice-shop
 
       - name: Fail Workflow if Secrets Found (Optional)
         run: exit 1
