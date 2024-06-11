@@ -1,16 +1,30 @@
+name: Secret Detection
+
 on:
   push:
-    branches:
-      - master
-  pull_request:
+    branches: [ master ]
 
 jobs:
-  test:
+  detect_secrets:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    - name: Secret Scanning
-      uses: trufflesecurity/trufflehog@main
+      - uses: actions/checkout@v3
+
+      - name: Download new branch (optional)
+        run: |
+          git fetch origin master
+          # This assumes your local branch is also named master
+          git checkout master
+
+      - name: Install TruffleHog
+        uses: trufflesecurity/trufflehog@v3.78.0
+        with:
+          path: /home/runner/work/juice-shop/juice-shop
+          tools: trufflehog
+
+      - name: run-stuff
+        run: ls /home/runner/work/juice-shop/juice-shop
+
+      - name: Fail Workflow if Secrets Found (Optional)
+        run: exit 1
+        if: ${{ contains(steps.detect_secrets.outputs, 'secrets_found') }}
