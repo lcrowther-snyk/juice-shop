@@ -24,7 +24,7 @@ jobs:
         pip install truffleHog
 
     - name: Run truffleHog scan
-      run: trufflehog filesystem --directory .
+      run: trufflehog filesystem .
 
     - name: Report findings
       if: failure()
