@@ -1,16 +1,31 @@
+name: Secret Scan on Push to Master
+
 on:
   push:
     branches:
       - master
-  pull_request:
 
 jobs:
-  test:
+  secret-scan:
     runs-on: ubuntu-latest
+    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
       with:
-        fetch-depth: 0
-    - name: Secret Scanning
-      uses: trufflesecurity/trufflehog@main
+        python-version: '3.x'
+
+    - name: Install truffleHog
+      run: |
+        python -m pip install --upgrade pip
+        pip install truffleHog
+
+    - name: Run truffleHog scan
+      run: trufflehog filesystem --directory .
+
+    - name: Report findings
+      if: failure()
+      run: echo "Secrets found! Please review the output above."
