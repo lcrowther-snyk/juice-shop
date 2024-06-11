@@ -19,6 +19,7 @@ jobs:
       - name: Install TruffleHog
         uses: trufflesecurity/trufflehog@v3.78.0
         with:
+          path: .
           tools: trufflehog
 
       - name: Scan for Secrets
