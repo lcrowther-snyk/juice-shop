@@ -27,4 +27,4 @@ jobs:
 
       - name: Fail Workflow if Secrets Found (Optional)
         run: exit 1
-        if: ${{ contains(steps.detect_secrets.outputs, 'secrets_found') }}
+        #if: ${{ contains(steps.detect_secrets.outputs, 'secrets_found') }}
