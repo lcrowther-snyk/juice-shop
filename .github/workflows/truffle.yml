@@ -17,7 +17,7 @@ jobs:
           git checkout master
 
       - name: Install TruffleHog
-        uses: grahamwl/gh-action-install-tools@v1
+        uses: trufflesecurity/trufflehog@main
         with:
           tools: trufflehog
 
