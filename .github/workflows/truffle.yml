@@ -19,11 +19,8 @@ jobs:
       - name: Install TruffleHog
         uses: trufflesecurity/trufflehog@v3.78.0
         with:
-          path: .
+          path: ./juice-shop
           tools: trufflehog
-
-      - name: Scan for Secrets
-        run: ls -l /usr/bin
 
       - name: Fail Workflow if Secrets Found (Optional)
         run: exit 1
